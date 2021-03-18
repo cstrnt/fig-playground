@@ -1,5 +1,6 @@
-import { Input, InputGroup, InputLeftAddon, InputLeftElement } from '@chakra-ui/input'
-import { Box, Flex } from '@chakra-ui/layout'
+import { Button } from '@chakra-ui/button'
+import { Input, InputGroup, InputLeftAddon } from '@chakra-ui/input'
+import { Box } from '@chakra-ui/layout'
 import React, {useState, useEffect} from 'react'
 
 function parseInputValue(value) {
@@ -7,23 +8,29 @@ function parseInputValue(value) {
 }
 
 function getSuggestions(input: string[], spec) {
-  return []
+  return ["bla", "blub"]
 }
 
 const Result = () => {
 
   const [input, setInput] = useState<string[]>([])
+  const [suggs, setSuggs] = useState<string[]>([])
 
   useEffect(()=> {
-    console.log(input)
+    setSuggs(input)
   },[input])
 
   return (
-    <Box background="gray.900" height="full" textAlign="left">      
-    <InputGroup>
-      <InputLeftAddon p="sm" fontFamily="monospace" color="orange.600" bg="transparent" border="none" pointerEvents="none" children="fiq@web $"></InputLeftAddon>
-      <Input onChange={(e) => setInput(parseInputValue(e.currentTarget.value))} fontSize="sm" border="none" color="white" autoFocus _focus={{outline: "none"}} />
-    </InputGroup>
+    <Box pos="relative" background="gray.900" height="full" textAlign="left">      
+      <InputGroup>
+        <InputLeftAddon p="sm" fontFamily="monospace" color="orange.600" bg="transparent" border="none" pointerEvents="none" children="fiq@web $"></InputLeftAddon>
+        <Input onChange={(e) => setInput(parseInputValue(e.currentTarget.value))} fontSize="sm" border="none" color="white" autoFocus _focus={{outline: "none"}} />
+      </InputGroup>
+      {suggs.length > 0 && 
+        <Box pos="absolute">
+          {suggs.map(sugg => (<Button variant="link">{sugg}</Button>))}
+        </Box>
+      }
     </Box>
   )
 }
