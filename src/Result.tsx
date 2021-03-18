@@ -1,28 +1,53 @@
-import React from 'react'
-import Terminal from 'react-console-emulator'
-
-const commands = {
-  echo: {
-    description: 'Echo a passed string.',
-    usage: 'echo <string>',
-    fn: (...args) => args.join(' '),
-  },
-}
+import {
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  InputLeftElement,
+} from '@chakra-ui/input'
+import { Box, Flex } from '@chakra-ui/layout'
+import React, { useState, useEffect } from 'react'
 
 interface Props {
   spec: Fig.Spec | null
 }
 
+function parseInputValue(value) {
+  return value.split(' ')
+}
+
+function getSuggestions(input: string[], spec) {
+  return []
+}
+
 const Result = ({ spec }: Props) => {
+  const [input, setInput] = useState<string[]>([])
+
+  useEffect(() => {
+    console.log(input)
+  }, [input])
+
   return (
-    // <Terminal
-    //   commands={commands}
-    //   welcomeMessage={'Welcome to the fiq Playground'}
-    //   promptLabel={'fig@Web:~$'}
-    // />
-    <pre style={{ maxHeight: '100vh', overflowY: 'scroll' }}>
-      {JSON.stringify(spec, null, 2)}
-    </pre>
+    <Box background="gray.900" height="full" textAlign="left">
+      <InputGroup>
+        <InputLeftAddon
+          p="sm"
+          fontFamily="monospace"
+          color="orange.600"
+          bg="transparent"
+          border="none"
+          pointerEvents="none"
+          children="fiq@web $"
+        ></InputLeftAddon>
+        <Input
+          onChange={(e) => setInput(parseInputValue(e.currentTarget.value))}
+          fontSize="sm"
+          border="none"
+          color="white"
+          autoFocus
+          _focus={{ outline: 'none' }}
+        />
+      </InputGroup>
+    </Box>
   )
 }
 
