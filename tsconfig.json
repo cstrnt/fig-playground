@@ -17,5 +17,6 @@
     "jsx": "react",
     "noImplicitAny": false
   },
-  "include": ["src"]
+  "include": ["src"],
+  "files": ["Fig.d.ts"]
 }

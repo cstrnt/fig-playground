@@ -1,26 +1,44 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { default as Monaco } from '@monaco-editor/react'
 import { Box } from '@chakra-ui/layout'
+import { getCompletion } from './lib/helper'
+import { useToast } from '@chakra-ui/toast'
 
-const Editor = () => {
+interface Props {
+  onNewSpec: (compl: Fig.Spec) => void
+}
+
+const Editor = ({ onNewSpec }: Props) => {
   const [value, setValue] = useState('// insert your spec here')
-  const [isValidating, setIsValidating] = useState<boolean | undefined>(
-    undefined
-  )
+  const toast = useToast()
+
+  const handleCompletion = useCallback((jsVal) => {
+    try {
+      const newCompletion = getCompletion(jsVal)
+      if (newCompletion !== null) {
+        onNewSpec(newCompletion)
+      }
+    } catch (e) {
+      toast({
+        status: 'error',
+        position: 'top',
+        title: 'Invalid Completion',
+      })
+    }
+  }, [])
 
   useEffect(() => {
-    let timeoutRef: NodeJS.Timeout | undefined = undefined
-    if (!isValidating) {
-      timeoutRef = setTimeout(() => {
-        console.log('Hello')
-        setIsValidating(false)
-      }, 1000)
-    } else {
-      if (timeoutRef !== undefined) {
-        clearTimeout(timeoutRef)
+    const handleSave = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault()
+        handleCompletion(value)
       }
     }
-  }, [isValidating])
+    document.addEventListener('keydown', handleSave)
+    return () => {
+      document.removeEventListener('keydown', handleSave)
+    }
+  }, [value])
 
   return (
     <Box h="100vh">
@@ -29,7 +47,6 @@ const Editor = () => {
         language="javascript"
         defaultValue=""
         onChange={(val) => {
-          setIsValidating(true)
           setValue(val || '')
         }}
         theme="vs-dark"
