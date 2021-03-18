@@ -1,3 +1,4 @@
+/* eslint-disable no-eval */
 export function getCompletion(code: string) {
   if (!code) return null
   let internalCode = code

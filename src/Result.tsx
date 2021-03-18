@@ -44,7 +44,7 @@ const Result = ({ spec }: Props) => {
 
   useEffect(()=> {
     setSuggs(getSuggestions(input, spec))
-  },[input])
+  },[input, spec])
 
   return (
     <Box pos="relative" background="gray.900" height="full" textAlign="left">      
