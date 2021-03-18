@@ -1,23 +1,38 @@
-import React, { useEffect } from 'react'
-import { default as Monaco, useMonaco } from '@monaco-editor/react'
+import React, { useEffect, useState } from 'react'
+import { default as Monaco } from '@monaco-editor/react'
 import { Box } from '@chakra-ui/layout'
 
 const Editor = () => {
-  const monaco = useMonaco()
+  const [value, setValue] = useState('// insert your spec here')
+  const [isValidating, setIsValidating] = useState<boolean | undefined>(
+    undefined
+  )
 
   useEffect(() => {
-    if (monaco?.editor) {
-      monaco.editor.setTheme('vs-black')
+    let timeoutRef: NodeJS.Timeout | undefined = undefined
+    if (!isValidating) {
+      timeoutRef = setTimeout(() => {
+        console.log('Hello')
+        setIsValidating(false)
+      }, 1000)
+    } else {
+      if (timeoutRef !== undefined) {
+        clearTimeout(timeoutRef)
+      }
     }
-  }, [monaco])
+  }, [isValidating])
 
   return (
     <Box h="100vh">
       <Monaco
+        value={value}
         language="javascript"
-        defaultValue="// insert your spec here"
-        onChange={(val) => console.log(val)}
-        theme="vs-black"
+        defaultValue=""
+        onChange={(val) => {
+          setIsValidating(true)
+          setValue(val || '')
+        }}
+        theme="vs-dark"
       />
     </Box>
   )

@@ -5,7 +5,7 @@ import Result from './Result'
 
 export const App = () => (
   <Box textAlign="center" fontSize="xl">
-    <SimpleGrid columns={2} minH="100vh" p={3}>
+    <SimpleGrid columns={2} minH="100vh">
       <Editor />
       <Result />
     </SimpleGrid>
