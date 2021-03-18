@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react'
 import { default as Monaco } from '@monaco-editor/react'
 import { Box } from '@chakra-ui/layout'

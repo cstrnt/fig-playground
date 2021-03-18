@@ -1,10 +1,5 @@
-import {
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  InputLeftElement,
-} from '@chakra-ui/input'
-import { Box, Flex } from '@chakra-ui/layout'
+import { Input, InputGroup, InputLeftAddon } from '@chakra-ui/input'
+import { Box } from '@chakra-ui/layout'
 import React, { useState, useEffect } from 'react'
 
 interface Props {
@@ -13,10 +8,6 @@ interface Props {
 
 function parseInputValue(value) {
   return value.split(' ')
-}
-
-function getSuggestions(input: string[], spec) {
-  return []
 }
 
 const Result = ({ spec }: Props) => {
