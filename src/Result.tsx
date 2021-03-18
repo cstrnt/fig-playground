@@ -36,7 +36,7 @@ const Result = ({ spec }: Props) => {
           bg="transparent"
           border="none"
           pointerEvents="none"
-          children="fiq@web $"
+          children="fig@web $"
         ></InputLeftAddon>
         <Input
           onChange={(e) => setInput(parseInputValue(e.currentTarget.value))}
