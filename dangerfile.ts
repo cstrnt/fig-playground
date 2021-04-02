@@ -1,4 +1,14 @@
 import { message, danger } from 'danger'
+import fs from 'fs'
 
-const modifiedMD = danger.git.modified_files.join('- ')
-message('Changed Files in this PR: \n - ' + modifiedMD)
+const run = async () => {
+  const modifiedMD = danger.git.modified_files.join('- ')
+  const diffs = danger.git.modified_files.map(async (filename) =>
+    fs.readFileSync(filename, { encoding: 'utf8' })
+  )
+
+  console.log(diffs)
+  message(diffs.join('\n'))
+}
+
+run()
