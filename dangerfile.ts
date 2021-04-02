@@ -3,7 +3,7 @@ import fs from 'fs'
 
 const run = async () => {
   const modifiedMD = danger.git.modified_files.join('- ')
-  const diffs = danger.git.modified_files.map(async (filename) =>
+  const diffs = danger.git.modified_files.map((filename) =>
     fs.readFileSync(filename, { encoding: 'utf8' })
   )
 
