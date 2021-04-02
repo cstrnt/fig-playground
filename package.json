@@ -46,6 +46,7 @@
     ]
   },
   "devDependencies": {
+    "danger": "^10.6.4",
     "prettier": "2.2.1"
   }
 }
